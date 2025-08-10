@@ -1,0 +1,35 @@
+.todo-list {
+    padding: 2rem;
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .todo-done {
+        text-decoration: line-through;
+    }
+
+    ul > li {
+        margin-top: 8px;
+    }
+
+    input {
+        height: 30px;
+        padding: 0 8px;
+    }
+
+    button {
+        width: 65px;
+        height: 40px;
+        padding: 0;
+    }
+
+    .add-btn,
+    .done-btn {
+        margin-left: 10px;
+    }
+
+    .delete-btn {
+        margin-left: 6px;
+    }
+}
