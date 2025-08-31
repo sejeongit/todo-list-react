@@ -6,7 +6,10 @@ import interactionPlugin from '@fullcalendar/interaction' // needed for dayClick
 import timeGridPlugin from '@fullcalendar/timegrid'
 import { INITIAL_EVENTS, createEventId } from '@/js/eventUtils.js'
 
-function TodoCalendar() {
+function TodoCalendar({todos, setTodos}) {
+    // const [currentEvents, setCurrentEvents] = useState([]);
+    const [currentAct, setCurrentAct] = useState('');
+
     const handleDateClick = (arg) => {
         alert(arg.dateStr)
     }
@@ -19,7 +22,7 @@ function TodoCalendar() {
 
         if (title) {
             calendarApi.addEvent({
-                id: createEventId,
+                id: createEventId(),
                 title,
                 start: selectInfo.startStr,
                 end: selectInfo.endStr,
@@ -34,9 +37,27 @@ function TodoCalendar() {
             <>
                 <p>{eventInfo.timeText}</p>
                 <p>{eventInfo.event.title}</p>
+                <div>
+                    <button type="button" className="cal-edit-btn">수정</button>
+                    <button type="button" className="cal-delete-btn">삭제</button>
+                </div>
             </>
         )
     }
+
+    function handleEventClick(clickInfo) {
+        if (
+          confirm(
+            `삭제하시겠습니까? '${clickInfo.event.title}'`
+          )
+        ) {
+          clickInfo.event.remove();
+        }
+      }
+    
+      function handleEvents(events) {
+        setCurrentEvents(events);
+      }
 
     return (
         <FullCalendar
@@ -49,9 +70,13 @@ function TodoCalendar() {
             }}
             editable={true}
             selectable={true}
+            selectMirror={true}
+            dayMaxEvents={true}
             initialEvents={INITIAL_EVENTS}
             select={handleDateSelect}
             eventContent={renderEventContent}
+            eventClick={handleEventClick}
+            // eventsSet={handleEvents} // called after events are initialized/added/changed/removed
             // dateClick={handleDateClick}
         />
     )

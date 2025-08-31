@@ -10,20 +10,28 @@ function TodoListInput({setTodos}) {
 
         setTodos((prevTodos) => [
                 ...prevTodos, // 이전 배열 복사
-                {id: Date.now(), text: inputVal, completed: false}
+                {
+                    id: Date.now(),
+                    text: inputVal,
+                    completed: false,
+                    editing: false,
+                    editText: ""
+                }
         ]);
         setInput('');
     }
 
     return (
         <>
-            <input type="text" 
-                className="add-todo-input"
-                value={inputVal}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="할 일 입력"
-            />
-            <button className="add-btn" onClick={addTodo}>추가</button>
+            <div className="todo-input-wrap">
+                <input type="text" 
+                    className="add-todo-input"
+                    value={inputVal}
+                    onChange={(e) => setInput(e.target.value)}
+                    placeholder="할 일 입력"
+                />
+                <button className="add-btn" onClick={addTodo}>추가</button>
+            </div>
         </>
     )
 }

@@ -6,6 +6,15 @@
         box-sizing: border-box;
     }
 
+    h1,
+    .todo-input-wrap  {
+        text-align: center;
+    }
+
+    .todo-input-wrap {
+        margin-bottom: 4rem;
+    }
+
     .todo-done {
         text-decoration: line-through;
     }
@@ -52,4 +61,17 @@
         align-items: center;
         gap: 8px;
     }
+
+    // full calendar
+    .fc {
+        .fc-toolbar-title {
+            margin: 0 2rem;
+        }
+
+        .fc-popover {
+            max-width: 100%;
+        }
+    }
+
 }
+
