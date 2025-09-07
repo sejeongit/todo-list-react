@@ -1,9 +1,18 @@
 function TodoItem ({
-    todo,
+    todos,
     setTodos,
 }) {
 
-    // 완료한 항목 체크/해제
+    // 중요도 체크
+    const togglePriority = () => {
+        setTodos((prevTodos) => 
+            prevTodos.map((t) =>
+                t.id === id ? {...t, priority: !t.priority} : t
+            )
+        )
+    }
+
+    // 완료한 항목 체크
     const toggleTodo = () => {
         setTodos((prevTodos) => 
             prevTodos.map((t) =>
@@ -30,7 +39,7 @@ function TodoItem ({
     const startEdit = () => {
         setTodos((prevTodos) => {
             prevTodos.map((t) => {
-                t.id === todo.id ? {...t, editing: true, editText: t.text} : t
+                t.id === todo.id ? {...t, editing: true, editText: t.title} : t
             })
         })
     }
@@ -47,7 +56,7 @@ function TodoItem ({
     const saveEdit = () => {
         setTodos((prevTodos) => 
             prevTodos.map((t) => 
-                t.id === todo.id ? {...t, text: t.editText, editing: false} : t
+                t.id === todo.id ? {...t, title: t.editText, editing: false} : t
             )
         );
     }
@@ -57,15 +66,16 @@ function TodoItem ({
             prevTodos.map((t) => {
                 t.id === todo.id ? {...t, edting: false} : t
             })
-        })
+        }) 
     }
 
     return (
         <li>
+            <input type="checkbox" className="priority-btn" onChange={togglePriority}/>
             <input type="checkbox"
                 className="done-btn"
                 onChange={toggleTodo} />
-                {todo.editing ? (
+                {/* {todo.editing ? (
                     <>
                         <input type="text"
                             className="edit-todo-input"
@@ -75,10 +85,11 @@ function TodoItem ({
                         <button onClick={saveEdit}>저장</button>
                         <button onClick={cancelEdit}>취소</button>
                     </>
-                ) : (
+                ) : ( */}
                     <>
-                        <span className={todo.completed ? "todo-done" : ""}>
-                            {todo.text}
+                        {/* <span className={todo.completed ? "todo-done" : ""}> */}
+                        <span>
+                            {/* {todo.title} */}
                         </span>
                         <div className="btn-wrap">
                             <button className="edit-btn" onClick={startEdit}>
@@ -91,7 +102,7 @@ function TodoItem ({
                             </button>
                         </div>
                     </>
-                )}
+                {/* )} */}
         </li>
     )
 }

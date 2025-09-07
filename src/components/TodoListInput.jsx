@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { createEventId } from '@/js/eventUtils.js';
 
 function TodoListInput({setTodos}) {
     const [inputVal, setInput] = useState('');
@@ -11,11 +12,12 @@ function TodoListInput({setTodos}) {
         setTodos((prevTodos) => [
                 ...prevTodos, // 이전 배열 복사
                 {
-                    id: Date.now(),
-                    text: inputVal,
+                    id: createEventId(),
+                    title: inputVal,
                     completed: false,
+                    priority: false,
                     editing: false,
-                    editText: ""
+                    editText: "",
                 }
         ]);
         setInput('');
