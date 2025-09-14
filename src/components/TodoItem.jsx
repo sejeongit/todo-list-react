@@ -93,8 +93,8 @@ function TodoItem ({
 
     return (
         <li>
-            <input type="checkbox" className="priority-btn" onChange={togglePriority}/>
-            <input type="checkbox" className="done-btn" onChange={toggleTodo} />
+            <span>중요</span> <input type="checkbox" className="priority-btn" onChange={togglePriority}/>
+            <span>완료</span> <input type="checkbox" className="done-btn" onChange={toggleTodo} />
                 {todoExtendedProps.editing ? (
                     <>
                         <input type="text"
@@ -107,9 +107,9 @@ function TodoItem ({
                     </>
                 ) : (
                     <>
-                        <span className={todoExtendedProps.completed ? "todo-done" : ""}>
+                        <p className={todoExtendedProps.completed ? "todo-done" : ""}>
                             {todo.title}
-                        </span>
+                        </p>
                         <div className="btn-wrap">
                             <button className="edit-btn" onClick={startEdit}>
                                 수정
