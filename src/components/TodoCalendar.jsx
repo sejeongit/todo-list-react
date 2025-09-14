@@ -8,66 +8,41 @@ import { createEventId } from '@/js/eventUtils.js'
 import TodoItem from '@/components/TodoItem';
 
 function TodoCalendar({todos, setTodos}) {
-    // const [currentEvents, setCurrentEvents] = useState([]);
-    const [currentAct, setCurrentAct] = useState('');
-
     const handleDateSelect = (selectInfo) => {
         let title = prompt('일정을 입력해주세요.');
         let calendarApi = selectInfo.view.calendar;
 
-        calendarApi.unselect(); // clear date selection
+        // 예: 선택된 날짜 범위
+        const { startStr, endStr, allDay } = selectInfo;
 
         if (title) {
-            calendarApi.addEvent({
+            const newTodo = {
                 id: createEventId(),
-                title,
+                title: title,
                 start: selectInfo.startStr,
                 end: selectInfo.endStr,
-                allDay: selectInfo.allDay
-            })
-
-            setTodos((prevTodos) => [
-                ...prevTodos,
-                {
-                    id: createEventId(),
-                    title: title,
+                allDay: selectInfo.allDay,
+                extendedProps : {
                     completed: false,
                     priority: false,
                     editing: false,
                     editText: "",
                 }
-            ]);
+            }
+
+            setTodos((prevTodos) => [...prevTodos, newTodo]);
         }
+
+        calendarApi.unselect(); // clear date selection
     }
 
     const renderEventContent = (eventInfo) => {
+        console.log('rendered')
         console.log(eventInfo)
         return (
-            <TodoItem todos={todos} setTodos={setTodos}></TodoItem>
-            // <>
-            //     <p>{eventInfo.timeText}</p>
-            //     <p>{eventInfo.event.title}</p>
-            //     <div>
-            //         <button type="button" className="cal-edit-btn">수정</button>
-            //         <button type="button" className="cal-delete-btn">삭제</button>
-            //     </div>
-            // </>
+            <TodoItem todo={eventInfo.event} setTodos={setTodos}></TodoItem>
         )
     }
-
-    function handleEventClick(clickInfo) {
-        if (
-          confirm(
-            `삭제하시겠습니까? '${clickInfo.event.title}'`
-          )
-        ) {
-          clickInfo.event.remove();
-        }
-      }
-    
-      function handleEvents(events) {
-        setCurrentEvents(events);
-      }
 
     return (
         <FullCalendar
@@ -82,11 +57,10 @@ function TodoCalendar({todos, setTodos}) {
             selectable={true}
             selectMirror={true}
             dayMaxEvents={true}
-            initialEvents={todos} // 초기 목록을 뿌려줌
             select={handleDateSelect}
+            events={todos}
             eventContent={renderEventContent}
-            // events={todos}
-            // eventClick={handleEventClick}
+            // eventChange={}
             // eventsSet={handleEvents} // called after events are initialized/added/changed/removed
             // dateClick={handleDateClick}
         />

@@ -7,13 +7,25 @@ export const INITIAL_EVENTS = [
     id: createEventId(),
     title: 'All-day event',
     start: todayStr,
-    allDay: true
+    allDay: true,
+    extendedProps : {
+        completed: false,
+        priority: false,
+        editing: false,
+        editText: "",
+    }
   },
   {
     id: createEventId(),
     title: 'Timed event',
     start: todayStr + 'T12:00:00',
-    allDay: false
+    allDay: false,
+    extendedProps : {
+        completed: false,
+        priority: false,
+        editing: false,
+        editText: "",
+    }
   }
 ]
 

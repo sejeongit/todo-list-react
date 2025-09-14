@@ -7,11 +7,12 @@ import { INITIAL_EVENTS } from '@/js/eventUtils';
 
 function TodoList() {
     const [todos, setTodos] = useState(INITIAL_EVENTS);
-
+    console.log(todos);
+    
     return (
         <div className="todo-list">
             <h1>ToDo List</h1>
-            <TodoListInput setTodos={setTodos}/>
+            {/* <TodoListInput setTodos={setTodos}/> */}
             <TodoPrioritySelect />
             <TodoCalendar todos={todos} setTodos={setTodos} />
         </div>

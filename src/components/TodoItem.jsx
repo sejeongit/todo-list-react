@@ -1,13 +1,19 @@
 function TodoItem ({
-    todos,
+    todo,
     setTodos,
 }) {
+
+    // 현재 todo 객체 (eventInfo)
+    // const thisTodoEvtObj = eventInfo.event;
+    const todoExtendedProps = todo.extendedProps;
+    console.log(todoExtendedProps)
+
 
     // 중요도 체크
     const togglePriority = () => {
         setTodos((prevTodos) => 
             prevTodos.map((t) =>
-                t.id === id ? {...t, priority: !t.priority} : t
+                t.id === todo.id ? {...t, priority: !t.priority} : t
             )
         )
     }
@@ -16,7 +22,7 @@ function TodoItem ({
     const toggleTodo = () => {
         setTodos((prevTodos) => 
             prevTodos.map((t) =>
-                t.id === id ? {...t, completed: !t.completed} : t
+                t.id === todo.id ? {...t, completed: !t.completed} : t
             )
         )
     }
@@ -37,11 +43,27 @@ function TodoItem ({
     
     // 할 일 수정
     const startEdit = () => {
-        setTodos((prevTodos) => {
-            prevTodos.map((t) => {
-                t.id === todo.id ? {...t, editing: true, editText: t.title} : t
-            })
-        })
+        console.log('startedit')
+        // setTodos((prevTodos) => {
+        //     // let editingTodo;
+        //     // for(i = 0; i < prevTodos.length; i++) {
+        //     //     if(prevTodos[i] === todo.id) {
+                    
+        //     //     }
+        //     // }
+        //     prevTodos.map((t) => {
+        //         t.id === todo.id ? {...t, editing: true, editText: t.title} : t
+        //     })
+        // })
+        // setTodos((prevTodos) => {
+        //     prevTodos.map((t) => {
+        //         if(t.id === todo.id){
+        //             console.log('y')
+        //         }else{
+        //             console.log('n')
+        //         }
+        //     })
+        // })
     }
 
     const handleEditTextChange = (e) => {
@@ -72,24 +94,21 @@ function TodoItem ({
     return (
         <li>
             <input type="checkbox" className="priority-btn" onChange={togglePriority}/>
-            <input type="checkbox"
-                className="done-btn"
-                onChange={toggleTodo} />
-                {/* {todo.editing ? (
+            <input type="checkbox" className="done-btn" onChange={toggleTodo} />
+                {todoExtendedProps.editing ? (
                     <>
                         <input type="text"
                             className="edit-todo-input"
-                            value={editText} 
+                            value={todoExtendedProps.editText} 
                             onChange={handleEditTextChange}
                         />
                         <button onClick={saveEdit}>저장</button>
                         <button onClick={cancelEdit}>취소</button>
                     </>
-                ) : ( */}
+                ) : (
                     <>
-                        {/* <span className={todo.completed ? "todo-done" : ""}> */}
-                        <span>
-                            {/* {todo.title} */}
+                        <span className={todoExtendedProps.completed ? "todo-done" : ""}>
+                            {todo.title}
                         </span>
                         <div className="btn-wrap">
                             <button className="edit-btn" onClick={startEdit}>
@@ -102,7 +121,7 @@ function TodoItem ({
                             </button>
                         </div>
                     </>
-                {/* )} */}
+                )} 
         </li>
     )
 }
