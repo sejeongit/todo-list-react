@@ -4,7 +4,6 @@ function TodoItem ({
 }) {
 
     // 현재 todo 객체 (eventInfo)
-    // const thisTodoEvtObj = eventInfo.event;
     const todoExtendedProps = todo.extendedProps;
     console.log(todoExtendedProps)
 

@@ -12,7 +12,7 @@ function TodoList() {
     return (
         <div className="todo-list">
             <h1>ToDo List</h1>
-            {/* <TodoListInput setTodos={setTodos}/> */}
+            <TodoListInput setTodos={setTodos}/>
             <TodoPrioritySelect />
             <TodoCalendar todos={todos} setTodos={setTodos} />
         </div>

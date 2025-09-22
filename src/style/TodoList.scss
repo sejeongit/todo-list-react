@@ -7,13 +7,17 @@
         box-sizing: border-box;
     }
 
+    h1 {
+        margin-bottom: 50px;
+    }
+
     h1,
     .todo-input-wrap  {
         text-align: center;
     }
 
     .todo-input-wrap {
-        margin-bottom: 4rem;
+        margin-bottom: 10px;
     }
 
     .todo-done {
