@@ -1,14 +1,19 @@
 .todo-list {
+
+    --primary-color: #646cff;
+    --border-color-thick: #adadad;
+    --border-color: #e5e5e5;
+
     width: 900px;
     padding: 2rem;
     font-size: 16px;
 
     &, * {
-        box-sizing: border-box;
+        box-sizing: border-box !important;
     }
 
     h1 {
-        margin-bottom: 50px;
+        margin-bottom: 60px;
     }
 
     h1,
@@ -17,11 +22,16 @@
     }
 
     .todo-input-wrap {
+        height: 34px;
         margin-bottom: 10px;
     }
 
     .todo-done {
         text-decoration: line-through;
+    }
+
+    p {
+        margin: 0;
     }
     
     ul,li {
@@ -36,13 +46,21 @@
         margin-top: 8px;
     }
 
+    input, button, select {
+        cursor: pointer;
+        transition: border-color 0.25s;
+        &:hover {
+            border-color: var(--primary-color) !important;
+        }
+    }
+
     input, button {
         padding: 0;
     }
 
     input, select {
         border-radius: 5px;
-        border: 1px solid #E5E5E5 !important;
+        border: 1px solid var(--border-color);
     }
 
     select {
@@ -59,6 +77,10 @@
         background-size: 0.65rem auto;
     }
 
+    button {
+        border-color: var(--border-color);
+    }
+
     input[type=text] {
         height: 34px;
         padding: 0 8px;
@@ -71,12 +93,28 @@
     }
 
     input[type=checkbox] {
+        appearance: none;
         width: 18px;
         height: 18px;
+        background-color: #FFF;
+        border-radius: 4px;
         cursor: pointer;
+        vertical-align: middle;
+    }
+
+    input[type=checkbox]:checked::after {
+        content:"";
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        margin: 2px;
+        background-color:var(--primary-color);
+        border-radius: 3px;
     }
 
     .add-btn{
+        width: 60px;
+        height: 100%;
         margin-left: 10px;
     }
 
@@ -88,9 +126,9 @@
 
     .btn-wrap {
         display: flex;
+        justify-content: center;
         align-items: center;
         gap: 8px;
-        margin-top: 6px;
     }
 
     // full calendar
@@ -99,8 +137,61 @@
             margin: 0 2rem;
         }
 
+        .fc-button {
+            border-radius: 10px;
+        }
+
         .fc-popover {
             max-width: 100%;
+        }
+
+        .fc-popover-body{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-width: 250px;
+        }
+
+        .fc-event {
+            padding:10px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background-color: #FFF;
+
+            &:hover {
+                border-style:dashed;
+            }
+
+            li {
+                width: 100%;
+            }
+
+            .checkbox-wrap {
+                text-align: center;
+
+                & > *:nth-child(2) {
+                    margin-right: 8px;
+                }
+            }
+
+            input[type=checkbox] {
+                border-color: #adadad;
+
+                &+span {
+                    margin-left: 4px;
+                    vertical-align: middle;
+                }
+            }
+
+            p {
+                margin: 10px 0;
+                line-height: normal;
+                text-align: center;
+            }
+        }
+
+        .fc-h-event, .fc-v-event {
+            background-color: var(--primary-color);
         }
     }
 

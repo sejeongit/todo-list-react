@@ -92,8 +92,10 @@ function TodoItem ({
 
     return (
         <li>
-            <span>중요</span> <input type="checkbox" className="priority-btn" onChange={togglePriority}/>
-            <span>완료</span> <input type="checkbox" className="done-btn" onChange={toggleTodo} />
+            <div className="checkbox-wrap">
+                <input type="checkbox" className="priority-btn" onChange={togglePriority}/><span>중요</span>
+                <input type="checkbox" className="done-btn" onChange={toggleTodo}/><span>완료</span>
+            </div>
                 {todoExtendedProps.editing ? (
                     <>
                         <input type="text"
