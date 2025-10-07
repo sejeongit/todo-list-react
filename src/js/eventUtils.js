@@ -10,9 +10,7 @@ export const INITIAL_EVENTS = [
     allDay: true,
     extendedProps : {
         completed: false,
-        priority: false,
-        editing: false,
-        editText: "",
+        priority: false
     }
   },
   {
@@ -22,9 +20,7 @@ export const INITIAL_EVENTS = [
     allDay: false,
     extendedProps : {
         completed: false,
-        priority: false,
-        editing: false,
-        editText: "",
+        priority: false
     }
   }
 ]

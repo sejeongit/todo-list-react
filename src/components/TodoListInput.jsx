@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { createEventId } from '@/js/eventUtils.js';
 
-function TodoListInput({setTodos}) {
+function TodoListInput({setTodos, addNewTodo}) {
     const [inputVal, setInput] = useState('');
 
     // 할 일 추가
@@ -32,7 +32,7 @@ function TodoListInput({setTodos}) {
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="할 일 입력"
                 />
-                <button className="add-btn" onClick={addTodo}>추가</button>
+                <button className="add-btn" onClick={() => {}}>추가</button>
             </div>
         </>
     )

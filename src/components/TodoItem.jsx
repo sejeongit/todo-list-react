@@ -4,6 +4,7 @@ function TodoItem ({
 }) {
 
     // 현재 todo 객체 (eventInfo)
+    const eventInfo = todo.event;
     const todoExtendedProps = todo.extendedProps;
     console.log(todoExtendedProps)
 
@@ -12,7 +13,7 @@ function TodoItem ({
     const togglePriority = () => {
         setTodos((prevTodos) => 
             prevTodos.map((t) =>
-                t.id === todo.id ? {...t, priority: !t.priority} : t
+                t.id === eventInfo.id ? {...t, priority: !t.priority} : t
             )
         )
     }
@@ -21,7 +22,7 @@ function TodoItem ({
     const toggleTodo = () => {
         setTodos((prevTodos) => 
             prevTodos.map((t) =>
-                t.id === todo.id ? {...t, completed: !t.completed} : t
+                t.id === eventInfo.id ? {...t, completed: !t.completed} : t
             )
         )
     }
@@ -37,57 +38,7 @@ function TodoItem ({
         // 2. 현재 요소의 인덱스 i가 삭제하려는 index와 같지 않으면 true(유지), 같으면 false(제외)
         // setTodos(todos.filter((_, i) => i !== index)); // _는 element를 쓰지 않으니까 관습적으로 이름을 _로 쓴 것 -> 의미상으로는 무시되는 파라미터
     
-        setTodos((prevTodos) => prevTodos.filter((t) => t.id !== todo.id));
-    }
-    
-    // 할 일 수정
-    const startEdit = () => {
-        console.log('startedit')
-        // setTodos((prevTodos) => {
-        //     // let editingTodo;
-        //     // for(i = 0; i < prevTodos.length; i++) {
-        //     //     if(prevTodos[i] === todo.id) {
-                    
-        //     //     }
-        //     // }
-        //     prevTodos.map((t) => {
-        //         t.id === todo.id ? {...t, editing: true, editText: t.title} : t
-        //     })
-        // })
-        // setTodos((prevTodos) => {
-        //     prevTodos.map((t) => {
-        //         if(t.id === todo.id){
-        //             console.log('y')
-        //         }else{
-        //             console.log('n')
-        //         }
-        //     })
-        // })
-    }
-
-    const handleEditTextChange = (e) => {
-        const value = e.target.value;
-        setTodos((prevTodos) => {
-            prevTodos.map((t) => {
-                t.id === todo.id ? {...t, editText: value} : t
-            })
-        })
-    }
-    
-    const saveEdit = () => {
-        setTodos((prevTodos) => 
-            prevTodos.map((t) => 
-                t.id === todo.id ? {...t, title: t.editText, editing: false} : t
-            )
-        );
-    }
-
-    const cancelEdit = () => {
-        setTodos((prevTodos) => {
-            prevTodos.map((t) => {
-                t.id === todo.id ? {...t, edting: false} : t
-            })
-        }) 
+        setTodos((prevTodos) => prevTodos.filter((t) => t.id !== eventInfo.id));
     }
 
     return (
@@ -96,33 +47,19 @@ function TodoItem ({
                 <input type="checkbox" className="priority-btn" onChange={togglePriority}/><span>중요</span>
                 <input type="checkbox" className="done-btn" onChange={toggleTodo}/><span>완료</span>
             </div>
-                {todoExtendedProps.editing ? (
-                    <>
-                        <input type="text"
-                            className="edit-todo-input"
-                            value={todoExtendedProps.editText} 
-                            onChange={handleEditTextChange}
-                        />
-                        <button onClick={saveEdit}>저장</button>
-                        <button onClick={cancelEdit}>취소</button>
-                    </>
-                ) : (
-                    <>
-                        <p className={todoExtendedProps.completed ? "todo-done" : ""}>
-                            {todo.title}
-                        </p>
-                        <div className="btn-wrap">
-                            <button className="edit-btn" onClick={startEdit}>
-                                수정
-                            </button>
-                            <button className="delete-btn" onClick={() => {
-                                confirm("삭제하시겠습니까?") ? deleteTodo() : "";
-                            }}>
-                                삭제
-                            </button>
-                        </div>
-                    </>
-                )} 
+            <p className={todoExtendedProps.completed ? "todo-done" : ""}>
+                {eventInfo.title}
+            </p>
+            <div className="btn-wrap">
+                <button className="edit-btn">
+                    수정
+                </button>
+                <button className="delete-btn" onClick={() => {
+                    confirm("삭제하시겠습니까?") ? deleteTodo() : "";
+                }}>
+                    삭제
+                </button>
+            </div>
         </li>
     )
 }
