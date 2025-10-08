@@ -1,25 +1,25 @@
 import { useState } from 'react';
 import { createEventId } from '@/js/eventUtils.js';
 
-function TodoListInput({setTodos, addNewTodo}) {
+function TodoListInput({setTodos}) {
     const [inputVal, setInput] = useState('');
+    let todayStr = new Date().toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
 
-    // 할 일 추가
-    const addTodo = () => {
+    const addInputTodo = () => {
         // input에 공백밖에 없을 시 return
         if(inputVal.trim() === '') return; // * trim : 문자열 앞뒤 공백 제거
 
-        setTodos((prevTodos) => [
-                ...prevTodos, // 이전 배열 복사
-                {
-                    id: createEventId(),
-                    title: inputVal,
-                    completed: false,
-                    priority: false,
-                    editing: false,
-                    editText: "",
-                }
-        ]);
+        const newTodo = {
+            id: createEventId(),
+            title: inputVal,
+            start: todayStr,
+            allDay: true,
+            extendedProps : {
+                completed: false,
+                priority: false,
+            }
+        }
+        setTodos((prevTodos) => [...prevTodos, newTodo]);
         setInput('');
     }
 
@@ -32,7 +32,7 @@ function TodoListInput({setTodos, addNewTodo}) {
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="할 일 입력"
                 />
-                <button className="add-btn" onClick={() => {}}>추가</button>
+                <button className="add-btn" onClick={addInputTodo}>추가</button>
             </div>
         </>
     )

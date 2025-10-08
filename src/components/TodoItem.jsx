@@ -1,13 +1,15 @@
+import TodoEditModal from "@/components/TodoEditModal";
+
 function TodoItem ({
     todo,
     setTodos,
+    modalOpen,
+    currentEvent
 }) {
-
     // 현재 todo 객체 (eventInfo)
     const eventInfo = todo.event;
-    const todoExtendedProps = todo.extendedProps;
+    const todoExtendedProps = eventInfo.extendedProps;
     console.log(todoExtendedProps)
-
 
     // 중요도 체크
     const togglePriority = () => {
@@ -42,25 +44,28 @@ function TodoItem ({
     }
 
     return (
-        <li>
-            <div className="checkbox-wrap">
-                <input type="checkbox" className="priority-btn" onChange={togglePriority}/><span>중요</span>
-                <input type="checkbox" className="done-btn" onChange={toggleTodo}/><span>완료</span>
-            </div>
-            <p className={todoExtendedProps.completed ? "todo-done" : ""}>
-                {eventInfo.title}
-            </p>
-            <div className="btn-wrap">
-                <button className="edit-btn">
-                    수정
-                </button>
-                <button className="delete-btn" onClick={() => {
-                    confirm("삭제하시겠습니까?") ? deleteTodo() : "";
-                }}>
-                    삭제
-                </button>
-            </div>
-        </li>
+        <>
+            <li>
+                <div className="checkbox-wrap">
+                    <input type="checkbox" className="priority-btn" onChange={togglePriority}/><span>중요</span>
+                    <input type="checkbox" className="done-btn" onChange={toggleTodo}/><span>완료</span>
+                </div>
+                <p className={todoExtendedProps.completed ? "todo-done" : ""}>
+                    {eventInfo.title}
+                </p>
+                <div className="btn-wrap">
+                    <button className="edit-btn">
+                        수정
+                    </button>
+                    <button className="delete-btn" onClick={() => {
+                        confirm("삭제하시겠습니까?") ? deleteTodo() : "";
+                    }}>
+                        삭제
+                    </button>
+                </div>
+            </li>
+            {/* <TodoEditModal isOpen={modalOpen} currentEvent={currentEvent}/> */}
+        </>
     )
 }
 
