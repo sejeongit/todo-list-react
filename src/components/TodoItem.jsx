@@ -1,15 +1,20 @@
+import { useState } from "react";
 import TodoEditModal from "@/components/TodoEditModal";
 
 function TodoItem ({
     todo,
     setTodos,
     modalOpen,
-    currentEvent
+    setModalOpen,
+    currentEvent,
+    setCurrentEvent
 }) {
+    console.log(todo)
     // 현재 todo 객체 (eventInfo)
     const eventInfo = todo.event;
     const todoExtendedProps = eventInfo.extendedProps;
-    console.log(todoExtendedProps)
+    // 수정 중인 객체
+    // const [editingTodo, setEditingTodo] = useState(null);
 
     // 중요도 체크
     const togglePriority = () => {
@@ -43,9 +48,15 @@ function TodoItem ({
         setTodos((prevTodos) => prevTodos.filter((t) => t.id !== eventInfo.id));
     }
 
+    // 수정 모달 열기
+    const openEditModal = () => {
+        setCurrentEvent('edit');
+        setModalOpen(true);
+    };
+
     return (
         <>
-            <li>
+            <li id={eventInfo.id}>
                 <div className="checkbox-wrap">
                     <input type="checkbox" className="priority-btn" onChange={togglePriority}/><span>중요</span>
                     <input type="checkbox" className="done-btn" onChange={toggleTodo}/><span>완료</span>
@@ -54,7 +65,7 @@ function TodoItem ({
                     {eventInfo.title}
                 </p>
                 <div className="btn-wrap">
-                    <button className="edit-btn">
+                    <button className="edit-btn" onClick={() => {openEditModal(eventInfo)}}>
                         수정
                     </button>
                     <button className="delete-btn" onClick={() => {
@@ -64,7 +75,12 @@ function TodoItem ({
                     </button>
                 </div>
             </li>
-            {/* <TodoEditModal isOpen={modalOpen} currentEvent={currentEvent}/> */}
+            <TodoEditModal
+                initialValues={eventInfo}
+                isOpen={modalOpen}
+                currentEvent={currentEvent}
+                setCurrentEvent={setCurrentEvent}
+            />
         </>
     )
 }

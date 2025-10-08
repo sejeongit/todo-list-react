@@ -1,43 +1,44 @@
-import { INITIAL_EVENTS } from '@/js/eventUtils';
-import { createEventId } from '@/js/eventUtils.js';
 import React, { useState } from "react";
 
-function TodoEditModal({initialValues, isOpen, currentEvent}){
+function TodoEditModal({initialValues, isOpen, currentEvent, setCurrentEvent}){
+    // 최초 todo content
     const [title, setTitle] = useState(initialValues.title);
-    const [start, setStart] = useState(initialValues.title);
-    const [end, setEnd] = useState(initialValues.end);
+    const [start, setStart] = useState(initialValues.startStr);
+    const [end, setEnd] = useState(initialValues.endStr);
     const [allDay, setAllDay] = useState(initialValues.allDay || false);
+    // 수정 중인 content
+    const [editingTodo, setEditingTodo] = useState(null);
 
     // 값이 바뀌면 초기값이 바뀌었을 때도 반영하도록
     React.useEffect(() => {
         setTitle(initialValues.title);
-        setStart(initialValues.start);
-        setEnd(initialValues.end);
+        setStart(initialValues.startStr);
+        setEnd(initialValues.endStr);
         setAllDay(initialValues.allDay || false);
     }, [initialValues]);
 
-    if (!isOpen) return null;
+    if (!isOpen || !initialValues) return null;
 
-    const handleEventChange = (eventInfo) => {
-        // todo 수정
-        setTodos(prev => prev.map(e => {
-            if(e.id === eventInfo.id) {
-                return {
-                    ...e,
-                    title: e.title, // 제목은 클릭 수정으로 처리됨
-                    start: eventInfo.startStr,
-                    end: eventInfo.endStr || eventInfo.startStr,
-                    allDay: eventInfo.allDay
-                }
-            }
-            return e;
-        }));
-    }
+    // const todoChange = (eventInfo) => {
+    //     // todo 수정
+    //     setTodos(prev => prev.map(e => {
+    //         if(e.id === eventInfo.id) {
+    //             return {
+    //                 ...e,
+    //                 title: e.title, // 제목은 클릭 수정으로 처리됨
+    //                 start: eventInfo.startStr,
+    //                 end: eventInfo.endStr || eventInfo.startStr,
+    //                 allDay: eventInfo.allDay
+    //             }
+    //         }
+    //         return e;
+    //     }));
+    // }
 
-    const handleModalSave = (updated) => {
-        // editingEvent.id 기준으로 todos 배열 수정
+    const modalSave = (updated) => {
+        // editingTodo.id 기준으로 todos 배열 수정
         setTodos(prev => prev.map(e => {
-            if (e.id === editingEvent.id) {
+            if (e.id === editingTodo.id) {
                 return {
                     ...e,
                     title: updated.title,
@@ -50,13 +51,13 @@ function TodoEditModal({initialValues, isOpen, currentEvent}){
         }));
         setModalOpen(false);
         setCurrentEvent(null);
-        setEditingEvent(null);
+        setEditingTodo(null);
     }
 
-    const handleModalClose = () => {
+    const modalClose = () => {
         setModalOpen(false);
         setCurrentEvent(null);
-        setEditingEvent(null);
+        setEditingTodo(null);
     }
 
     return (
@@ -80,7 +81,7 @@ function TodoEditModal({initialValues, isOpen, currentEvent}){
                     <label>시작 날짜: </label>
                     <input
                         type="date"
-                        value={start.slice(0,10)}
+                        value={start.slice(0, 10)}
                         onChange={e => setStart(e.target.value)}
                     />
                 </div>
@@ -88,7 +89,7 @@ function TodoEditModal({initialValues, isOpen, currentEvent}){
                     <label>종료 날짜: </label>
                     <input
                         type="date"
-                        value={end ? end.slice(0,10) : start.slice(0,10)}
+                        value={end ? end.slice(0, 10) : start.slice(0, 10)}
                         onChange={e => setEnd(e.target.value)}
                     />
                 </div>
@@ -103,8 +104,8 @@ function TodoEditModal({initialValues, isOpen, currentEvent}){
                     </label>
                 </div>
                 <div style={{ marginTop: '10px' }}>
-                    <button onClick={() => { onSave({ title, start, end, allDay }); }}>저장</button>
-                    <button onClick={onClose} style={{ marginLeft: '8px' }}>취소</button>
+                    <button onClick={() => { modalSave({ title, start, end, allDay }); }}>저장</button>
+                    <button onClick={modalClose} style={{ marginLeft: '8px' }}>취소</button>
                 </div>
             </div>
         </div>
